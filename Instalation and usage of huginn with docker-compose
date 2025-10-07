@@ -26,19 +26,15 @@ sudo docker run -d -p 127.0.0.1:3000:3000 --name huginn ghcr.io/huginn/huginn
 sudo docker exec -it huginn /app/bin/rails console
 
 user = User.new(
-  email: 'danielcalvotorralbo@gmail.com',
-  password: '1ka2ka3ka', 
-  username: 'dan',
+  email: 'tucorreo',
+  password: 'tucontraseña', 
+  username: 'tuusuario',
   admin: true
 )
 
 user.save(validate: false)
 
 User.last.email # para verificar que se ha creado correctamente
-
-
-
-Welcome to Alpha Vantage! Your dedicated access key is: LE948YWFJLLJ1RJP. Please record this API key at a safe place for future data access.
 
 
 Al principio use una combinación de rss Agent y JavaScript agent, pero no funcionaba correctamente ya que el JavaScript agent daba error al mandar los datos al servidor.js, por lo que tran investigar vi que había un método que parecía mas viable ya que enviaba los datos mas simples, sin darles una estructura difícil de leer, mediante el uso de rss y webhook
@@ -69,3 +65,5 @@ docker exec -it huginn_web_1 bash
 Si quieres que se quede corriendo en primer plano (logs visibles):
 
 docker start -a huginn_web_1
+
+http:\\localhost:3000 en internet para acceder a huginn interfaz grafica web para la creacion y edicion de agentes 
