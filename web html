@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RSS Events</title>
+<style>
+  body { font-family: Arial; padding: 20px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+
+<h1>RSS Events</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>URL</th>
+      <th>Date Published</th>
+    </tr>
+  </thead>
+  <tbody id="events"></tbody>
+</table>
+
+<script>
+async function loadEvents() {
+  const res = await fetch('http://localhost:4000/events');
+  const events = await res.json();
+  const tbody = document.getElementById('events');
+  tbody.innerHTML = '';
+  events.forEach(e => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${e.id}</td><td><a href="${e.url}" target="_blank">${e.url}</a></td><td>${e.date_published}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+loadEvents();
+setInterval(loadEvents, 60000); // refresca cada minuto
+</script>
+
+</body>
+</html>
