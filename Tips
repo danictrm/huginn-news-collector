@@ -1,0 +1,11 @@
+Docker ps -a
+Docker start huginn
+
+si queremos parar el servidor exit
+ps aux | grep nombre servidor
+kill -9 "pid"
+
+npm install
+npm start
+
+recordr que en cheerio hay que descargar la ultima versión estable no la latest que va mal con npm
