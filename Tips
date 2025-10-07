@@ -8,7 +8,7 @@ kill -9 "pid"
 npm install
 npm start
 
-recordr que en cheerio hay que descargar la ultima versión estable no la latest que va mal con npm
+recordar que en cheerio hay que descargar la ultima versión estable no la latest que va mal con npm
 
 revisar condiciones de uso de RSS y no hacer scraping masivo
 
