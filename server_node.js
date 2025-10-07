@@ -2,20 +2,19 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const path = require('path');
-const querystring = require('querystring'); // ← Importar para decodificar
+const querystring = require('querystring'); 
 
 const app = express();
 const PORT = 4000;
 
-// Middleware
 app.use(cors());
-app.use(express.text({ type: '*/*' })); // ← Recibir como texto plano
+app.use(express.text({ type: '*/*' })); 
 app.use(express.static('public'));
 
-// Base de datos
+
 const db = new sqlite3.Database('huginn_events.db');
 
-// Crear tabla
+
 db.run(`CREATE TABLE IF NOT EXISTS rsss_events (
   id TEXT PRIMARY KEY,
   url TEXT NOT NULL,
@@ -25,16 +24,16 @@ db.run(`CREATE TABLE IF NOT EXISTS rsss_events (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
 
-// Endpoint para Huginn (POST) - MANEJO MANUAL de URL encoded
+
 app.post("/huginn", (req, res) => {
   console.log("📥 Evento recibido (URL encoded):");
  
   try {
-    // Decodificar manualmente los datos URL encoded
+    
     const decodedData = querystring.parse(req.body);
     console.log("Datos decodificados:", decodedData);
 
-    // Extraer campos (los nombres vienen exactamente como en el form)
+    
     const eventData = {
       id: decodedData.id,
       url: decodedData.url,
@@ -49,7 +48,7 @@ app.post("/huginn", (req, res) => {
       return res.status(400).json({ error: "Faltan campos id o url" });
     }
 
-    // Decodificar HTML entities (opcional)
+    
     if (eventData.title) {
       eventData.title = eventData.title.replace(/%20/g, ' ').replace(/%22/g, '"');
     }
@@ -75,7 +74,7 @@ app.post("/huginn", (req, res) => {
   }
 });
 
-// Endpoint para obtener eventos (GET) - Devuelve JSON normal
+
 app.get('/events', (req, res) => {
   db.all("SELECT * FROM rsss_events ORDER BY created_at DESC", [], (err, rows) => {
     if (err) {
@@ -88,12 +87,12 @@ app.get('/events', (req, res) => {
   });
 });
 
-// Health check
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server running' });
 });
 
-// Iniciar servidor
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running: http://localhost:${PORT}`);
 });
